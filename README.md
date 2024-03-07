@@ -1,9 +1,11 @@
 # apache-iptables-security (sesame)
-These scripts protect a server running Apache, PHP and iptables against SSH brute forcing or attacks on ports other to 80/443
+These scripts protect a server running Apache, PHP and iptables against SSH brute forcing or attacks on port 22
 
 ## Installation
 
-First edit /usr/share/sesame/.htpasswd and put your credentials there (search with your preferred search engine for "htpasswd generator", copy & paste).
+First clone this repository to /tmp and then move the files to their regarding directories.
+
+Then edit /usr/share/sesame/.htpasswd and put your credentials there (search with your preferred search engine for "htpasswd generator", copy & paste).
 
 `nano /usr/share/sesame/.htpasswd`
 
