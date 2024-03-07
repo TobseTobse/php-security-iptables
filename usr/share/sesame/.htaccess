@@ -1,0 +1,8 @@
+AuthUserFile /usr/share/sesame/.htpasswd
+AuthGroupFile /dev/null
+AuthName "Go and play somewhere else..."
+AuthType Basic
+
+<limit GET POST>
+require valid-user
+</limit>
