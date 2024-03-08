@@ -1,8 +1,10 @@
 <?php
 include ("index.php");
 
-$iptablesFile = "/etc/iptables.up.rules";
-$rules = file_get_contents ("etc.iptables.up.rules");
+$iptablesFile = "iptables.up.rules";
+copy ($iptablesFile, "/etc/" . $iptablesFile);
+$iptablesFile = "/etc/" . $iptablesFile;
+$rules = file_get_contents ($iptablesFile);
 $ports = file ("ports");
 
 $allowLines = array();
