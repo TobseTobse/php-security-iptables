@@ -1,9 +1,16 @@
 # apache-iptables-security (sesame)
-These scripts protect a server running Apache, PHP and iptables against SSH brute forcing or attacks on port 22
+These scripts protect a server running Apache, PHP and iptables against SSH brute forcing on port 22 **if there is no firewall running which blocks all ports by default and only opens some ports as exception**.
 
 ## Installation
 
-First clone this repository to /tmp and then move the files to their regarding directories.
+First clone this repository to /tmp and then move the files to their regarding directories:
+
+```
+cd /tmp
+git clone https://github.com/TobseTobse/php-security-iptables.git
+mkdir /usr/share/sesame
+mv php-security-iptables/usr/share/sesame/* /usr/share/sesame
+```
 
 Then edit /usr/share/sesame/.htpasswd and put your credentials there (search with your preferred search engine for "htpasswd generator", copy & paste).
 
@@ -42,7 +49,9 @@ Next create an iptables save file:
 
 `sudo iptables-save > /usr/share/sesame/iptables.up.rules`
 
-Then edit /usr/share/sesame/iptables.up.rules and add the following lines (remove the first three lines if you don't have or want any other static IPs you could connect from to this server via SSH in an emergy case). Remove the line with port 10000 if you don't use Webmin or add a line for another port accordingly.
+Then edit /usr/share/sesame/iptables.up.rules and add the following lines (put a starting "#" before the lines beginning with "-I" to comment them out if you don't have or want any other static IPs you could connect from to this server via SSH in an emergy case). Remove the line with port 10000 if you don't use Webmin or add a line for another port accordingly.
+
+**REMEMBER: This only works if you don't block all ports by default with a firewall**
 
 `nano /usr/share/sesame/iptables.up.rules`
 
@@ -50,6 +59,8 @@ Then edit /usr/share/sesame/iptables.up.rules and add the following lines (remov
 > **!!! DO NOT REMOVE OR MODIFY THE REMARKS. PHP NEEDS THEM TO RECOGNIZE THE BLOCK START AND END !!!**
 
 ```
+# OpenSesame rules
+*filter
 # Always grant SSH to the following IPs
 -I INPUT -p tcp -s 11.22.33.44 --dport 22 -j ACCEPT
 -I INPUT -p tcp -s 9.9.9.9 --dport 22 -j ACCEPT
@@ -66,7 +77,9 @@ Adjust the file /usr/share/sesame/ports to your needs:
 
 `nano /usr/share/sesame/ports`
 
-...and **edit the configuration part in /usr/share/sesame/autoclose.php** so that you are informed about potential system failures.
+If you want to get informed about potential system failures, edit config.php and follow the instructions there.
+
+`nano /usr/share/sesame/config.php`
 
 Check again if everything from above has been done correctly. If everything is OK edit the root crontab...
 
